@@ -3,7 +3,7 @@ const NotFound = require('../errors/NotFound');
 const BadForbidden = require('../errors/BadForbidden');
 
 const getMovies = (req, res, next) => Movie.find({})
-  .then((cards) => res.send(cards))
+  .then((movies) => res.send(movies))
   .catch(next);
 
 const createMovie = (req, res, next) => {
@@ -11,20 +11,20 @@ const createMovie = (req, res, next) => {
   newMovieData.owner = req.user._id;
 
   return Movie.create(newMovieData)
-    .then((newCard) => res.status(201)
-      .send(newCard))
+    .then((newMovie) => res.status(201)
+      .send(newMovie))
     .catch(next);
 };
 
 const deleteMovie = (req, res, next) => {
   const { id } = req.params;
   Movie.findById(id)
-    .orFail(new NotFound('Карточка не найдена'))
-    .then((card) => {
-      if (req.user._id === String(card.owner)) {
+    .orFail(new NotFound('Фильм не найден'))
+    .then((movie) => {
+      if (req.user._id === String(movie.owner)) {
         return Movie.deleteOne({ _id: id })
           .then(() => res.status(200)
-            .send({ message: `Карточка ${id} удалена` }))
+            .send({ message: `Фильм ${id} удален` }))
           .catch(next);
       }
       return next(new BadForbidden('Доступ запрещен'));
