@@ -1,7 +1,7 @@
 {
-  "name": "express-mesto-gha",
+  "name": "movies-explorer-api",
   "version": "1.0.0",
-  "description": "Проект Mesto фронтенд + бэкенд",
+  "description": "Back-end для проекта movies-explorer",
   "main": "app.js",
   "scripts": {
     "lint": "npx eslint .",
@@ -10,14 +10,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/dv-loginov/express-mesto-gha.git"
+    "url": "git+https://github.com/dv-loginov/movies-explorer-api.git"
   },
   "author": "Логинов Дмитрий",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/dv-loginov/express-mesto-gha/issues"
+    "url": "https://github.com/dv-loginov/movies-explorer-api/issues"
   },
-  "homepage": "https://github.com/dv-loginov/express-mesto-gha#readme",
+  "homepage": "https://github.com/dv-loginov/movies-explorer-api#readme",
   "devDependencies": {
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",

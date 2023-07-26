@@ -2,13 +2,16 @@ const {
   celebrate,
   Joi,
 } = require('celebrate');
-// const validator = require('validator');
 
 const patternUrl = /https?:\/\/([a-zA-Z0-9]([a-zA-Z0-9-]*[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}/;
 
 const signinValidator = celebrate({
   body: Joi.object()
     .keys({
+      name: Joi.string()
+        .required()
+        .min(2)
+        .max(30),
       email: Joi.string()
         .required()
         .email(),
@@ -69,13 +72,7 @@ const createMovieValidator = celebrate({
       thumbnail: Joi.string()
         .required()
         .pattern(patternUrl),
-      owner: Joi.string()
-        .length(24)
-        .hex()
-        .required(),
-      movieId: Joi.string()
-        .length(24)
-        .hex()
+      movieId: Joi.number()
         .required(),
       nameRU: Joi.string()
         .required(),
