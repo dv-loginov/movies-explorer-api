@@ -1,6 +1,7 @@
 const Movie = require('../models/movie');
 const NotFound = require('../errors/NotFound');
 const BadForbidden = require('../errors/BadForbidden');
+const { ERROR_MESSAGE } = require('../utils/const');
 
 const getMovies = (req, res, next) => Movie.find({ owner: req.user._id })
   .then((movies) => res.send(movies))
@@ -19,7 +20,7 @@ const createMovie = (req, res, next) => {
 const deleteMovie = (req, res, next) => {
   const { id } = req.params;
   Movie.findById(id)
-    .orFail(new NotFound('Фильм не найден'))
+    .orFail(new NotFound(ERROR_MESSAGE.ERROR_FILM_NOT_FOUND))
     .then((movie) => {
       if (req.user._id === String(movie.owner)) {
         return Movie.deleteOne({ _id: id })
@@ -27,7 +28,7 @@ const deleteMovie = (req, res, next) => {
             .send({ message: `Фильм ${id} удален` }))
           .catch(next);
       }
-      return next(new BadForbidden('Доступ запрещен'));
+      return next(new BadForbidden(ERROR_MESSAGE.ERROR_ACCESS_IS_DENIED));
     })
     .catch(next);
 };

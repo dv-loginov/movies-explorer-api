@@ -4,6 +4,10 @@ const User = require('../models/user');
 const ConflictRequest = require('../errors/ConflictRequest');
 const BadAuth = require('../errors/BadAuth');
 const BadRequest = require('../errors/BadRequest');
+const {
+  ERROR_MESSAGE,
+  MESSAGE,
+} = require('../utils/const');
 
 const {
   NODE_ENV,
@@ -28,7 +32,7 @@ const updateUser = (req, res, next) => {
         return next(new ConflictRequest());
       }
       if (err.name === 'ValidationError') {
-        return next(new BadRequest());
+        return next(new BadRequest(ERROR_MESSAGE.ERROR_BAD_REQUEST));
       }
       return next(err);
     });
@@ -48,7 +52,7 @@ const signup = (req, res, next) => {
         })
         .catch((err) => {
           if (err.code === 11000) {
-            return next(new ConflictRequest());
+            return next(new ConflictRequest(ERROR_MESSAGE.ERROR_BAD_REQUEST));
           }
           return next(err);
         });
@@ -63,11 +67,11 @@ const signin = (req, res, next) => {
   } = req.body;
   User.findOne({ email })
     .select('+password')
-    .orFail(new BadAuth('Неверный логин или пароль'))
+    .orFail(new BadAuth(ERROR_MESSAGE.ERROR_BAD_AUTH))
     .then((user) => {
       bcrypt.compare(password, user.password)
         .then((matched) => {
-          if (!matched) throw new BadAuth('Неверный логин или пароль');
+          if (!matched) throw new BadAuth(ERROR_MESSAGE.ERROR_BAD_AUTH);
 
           const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' },);
 
@@ -89,7 +93,7 @@ const signin = (req, res, next) => {
 
 const signout = (req, res) => {
   res.clearCookie('jwt')
-    .send({ message: 'Выход осуществлен' });
+    .send({ message: MESSAGE.EXIT });
 };
 
 module.exports = {
