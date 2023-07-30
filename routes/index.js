@@ -11,6 +11,7 @@ const {
 const {
   signin,
   signup,
+  signout,
 } = require('../controllers/users');
 
 const auth = require('../middlewares/auth');
@@ -25,15 +26,13 @@ router.post('/signin', signinValidator, signin); // login
 
 router.post('/signup', signupValidator, signup); // create user
 
-router.post('/signout', (req, res) => {
-  res.clearCookie('jwt').send({ message: 'Выход осуществлен' });
-});
-
 router.get('/', (req, res) => {
   res.send('Server is run');
 });
 
 router.use(auth);
+
+router.post('/signout', signout);
 
 router.use('/users', userRoutes);
 
