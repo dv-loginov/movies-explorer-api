@@ -71,6 +71,10 @@ const createMovieValidator = celebrate({
       thumbnail: Joi.string()
         .required()
         .pattern(patternUrl),
+      owner: Joi.string()
+        .length(24)
+        .hex()
+        .required(),  
       movieId: Joi.number()
         .required(),
       nameRU: Joi.string()
