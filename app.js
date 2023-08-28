@@ -39,14 +39,14 @@ app.use(cookieParser());
 
 app.use(express.json());
 
-//app.use(cors());
+// app.use(cors());
 
 app.use(cors({
   origin: [
-//     'https://dilog.nomoredomains.xyz',
-//     'http://dilog.nomoredomains.xyz',
-  'http://localhost:3000'],
-   credentials: true,
+    'https://dilog.nomoredomains.xyz',
+    'http://dilog.nomoredomains.xyz',
+    'http://localhost:3000'],
+  credentials: true,
 }));
 
 app.use(requestLogger);

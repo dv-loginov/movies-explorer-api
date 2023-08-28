@@ -26,10 +26,6 @@ const movieSchema = new Schema({
   },
   image: {
     type: String,
-    validate: {
-      validator: (v) => validator.isURL(v),
-      message: 'Некорректный URL постера',
-    },
     required: [true, 'Поле "image" должно быть заполнено'],
   },
   trailerLink: {
