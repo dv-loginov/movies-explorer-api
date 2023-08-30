@@ -52,7 +52,7 @@ const movieSchema = new Schema({
   movieId: {
     type: Number,
     required: [true, 'Поле "movieId" должно быть заполнено'],
-    unique: true,
+    // unique: true,
   },
   nameRU: {
     type: String,
